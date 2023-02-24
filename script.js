@@ -37,7 +37,8 @@ function takeDmg() {
         console.log('Enemy Hp:', fungusHP);
         renderApMeter();
         renderFungusHp();
-        
+
+
     } else if ($(this).hasClass('entangle')) {
 
         myAP = myAP - 23;
@@ -46,6 +47,7 @@ function takeDmg() {
         console.log('Enemy Hp:', fungusHP);
         renderApMeter();
         renderFungusHp();
+
     } else if ($(this).hasClass('dragon-blade')) {
 
         myAP = myAP - 38;
@@ -65,16 +67,20 @@ function takeDmg() {
     }
     apNoZero();
     fungusHPNoZero();
+    fungusDead();
+    meDead();
+
     console.log('I have given dmg!');// ensuring the function works in console. 
     //condtionals that when a certain attack happens, AP will go down, FuncgusHP will go down 
     //and show current HP and AP 
+
 
 }
 // creating a render for AP
 
 function renderApMeter() {
 
-    $('.ap-meter').html(`
+    $('.ap-text').html(`
     <div> 
         ap: ${myAP}
     </div>
@@ -85,24 +91,54 @@ function renderFungusHp() {
 
     $('.hp-text').html(`
     <div>
-         ${fungusHP}
+       hp:  ${fungusHP}
     </div>
     `)
 }
 
-//creating a apZero and hpZero function
-
+//Create a function where AP doesnt go below 0
 function apNoZero() {
 
     if (myAP <= 0) {
-        $('.attack-btn.arcane-sceptre').attr('disabled');
+        console.log('My AP is less then 0');
 
     }
 }
+
+//Create a function where fungusHP does not go below 0
 function fungusHPNoZero() {
 
-    if (fungusHP < 0) {
+    if (fungusHP <= 0) {
         fungusHP === 0;
-        
     }
 }
+//creat a function where if fungus hp = 0, change the class to dead
+function fungusDead() {
+    if (fungusHP <= 0) {
+        $('freaky-fungus.walk').html(`
+
+    <div class="enemy">
+        <div class="hp-text">100 HP</div>
+        <progress id="hp-meter" value="100" max="100"></progress>
+        <div class="freaky-fungus dead"></div>
+    </div>
+`)
+        console.log('Bleck, fungus dead');
+    }
+}
+
+function meDead() {
+    if (myAP <= 0) {
+        $('ap-text').html(`
+
+        <div class="ap-text"> ${fungusHP} AP
+        
+        </div>
+`)
+    }
+    console.log('fungus wins, you suck');
+}
+
+//Why when I create the gungusHPNoZero and APNoZero functions that the HP and AP still go into the negatives
+//How do I change the animation or text of dead or jump when I created functions for both.
+//Where do I put these specific functions?
